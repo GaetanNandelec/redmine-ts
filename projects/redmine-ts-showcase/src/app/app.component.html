@@ -1,0 +1,252 @@
+<div class="container">
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <form *ngIf="!user" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" formControlName="username" class="form-control"
+            [ngClass]="{ 'is-invalid': loginSubmitted && f_login.username.errors }" />
+          <div *ngIf="loginSubmitted && f_login.username.errors" class="invalid-feedback">
+            <div *ngIf="f_login.username.errors.required">Username is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" formControlName="password" class="form-control"
+            [ngClass]="{ 'is-invalid': loginSubmitted && f_login.password.errors }" />
+          <div *ngIf="loginSubmitted && f_login.password.errors" class="invalid-feedback">
+            <div *ngIf="f_login.password.errors.required">Password is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-primary" type="submit">Log in</button>
+
+        </div>
+      </form>
+      <button *ngIf="user" type="button" class="btn btn-primary" (click)="logout()">Log out</button>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+
+    <div class="col-sm-12">
+
+
+      <!-- Nav tabs -->
+
+      <ul class="nav nav-tabs" *ngIf="user">
+        <li class="nav-item">
+          <a class="nav-link active" id="projects-tab" data-toggle="tab" href="#projects">Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="tracker-tab" data-toggle="tab" href="#tracker">Trackers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="issue-statuses-tab" data-toggle="tab" href="#issue-statuses">Issue Statuses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings">Settings</a>
+        </li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content clearfix" *ngIf="user">
+        <div class="tab-pane active" id="projects">
+          <div class="row">
+            <div class="col-sm-12">
+              <app-projects></app-projects>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="tracker">
+          <div class="row">
+            <div class="col-sm-12">
+              <app-trackers></app-trackers>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="issue-statuses">
+          <div class="row">
+            <div class="col-sm-12">
+              <app-issue-statuses></app-issue-statuses>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="settings">
+          <div class="row">
+            <div class="col-sm-12">
+           
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 
+
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="loadIssues()">Load issues</button>
+      <button type="button" class="btn btn-primary" (click)="loadIssue()">Load issue</button>
+      <button type="button" class="btn btn-primary" (click)="createIssue()">Create issue</button>
+      <button type="button" class="btn btn-primary" (click)="updateIssue()">Update issue</button>
+      <button type="button" class="btn btn-primary" (click)="deleteIssue()">Delete issue</button>
+      <button type="button" class="btn btn-primary" (click)="addWatcherIssue()">Add watcher issue</button>
+      <button type="button" class="btn btn-primary" (click)="removeWatcherIssue()">Remove watcher issue</button>
+    </div>
+  </div>
+
+
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="loadProjects()">Load Projects</button>
+      <button type="button" class="btn btn-primary" (click)="loadProjectById()">Load Project By Id</button>
+      <button type="button" class="btn btn-primary" (click)="createProject()">Create Project</button>
+      <button type="button" class="btn btn-primary" (click)="updateProject()">Update Project</button>
+      <button type="button" class="btn btn-primary" (click)="deleteProject()">Delete Project</button>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="loadMembershipsForProject()">Get All Memberships for Project</button>
+      <button type="button" class="btn btn-primary" (click)="addMembershipToProject()">Add Membership for Project</button>
+      <button type="button" class="btn btn-primary" (click)="getMembershipById()">Get Membership By Id</button>
+      <button type="button" class="btn btn-primary" (click)="updateMembership()">Update Membership</button>
+      <button type="button" class="btn btn-primary" (click)="deleteMembership()">Delete Membership</button>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="getAllUsers()">Get All users</button>
+      <button type="button" class="btn btn-primary" (click)="createUser()">Create User</button>
+      <button type="button" class="btn btn-primary" (click)="getUserById()">Get user By Id</button>
+      <button type="button" class="btn btn-primary" (click)="updateUser()">Update User</button>
+      <button type="button" class="btn btn-primary" (click)="deleteUser()">Delete User</button>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="listTimeEntries()">Listing time entries</button>
+      <button type="button" class="btn btn-primary" (click)="showTimeEntry()">Showing a time entry</button>
+      <button type="button" class="btn btn-primary" (click)="updateTimeEntry()">Updating a time entry</button>
+      <button type="button" class="btn btn-primary" (click)="deleteTimeEntry()">Delete time entry</button>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="getAllNews()">All news</button>
+      <button type="button" class="btn btn-primary" (click)="getAllNewsForProjectId()">All news for project</button>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="getRelationsForIssue()">Get Relations For Issue</button>
+      <button type="button" class="btn btn-primary" (click)="createRelationForIssue()">Creates a relation for the issue of given id</button>
+      <button type="button" class="btn btn-primary" (click)="getRelationById()">Get Relation By Id</button>
+      <button type="button" class="btn btn-primary" (click)="deleteRelation()">Delete relation</button>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="getVersionsForProject()">Get Versions For Project</button>
+      <button type="button" class="btn btn-primary" (click)="createVersionForProject()">Creates a version for project</button>
+      <button type="button" class="btn btn-primary" (click)="getVersionById()">Get Version By Id</button>
+      <button type="button" class="btn btn-primary" (click)="updateVersionById()">Update Version</button>
+      <button type="button" class="btn btn-primary" (click)="deleteVersion()">Delete Version</button>
+    </div>
+  </div>
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="getWikiPagesForProject()">Getting the pages list of a wiki</button>
+      <button type="button" class="btn btn-primary" (click)="getWikiPageForProject()">Getting a wiki page</button>
+      <button type="button" class="btn btn-primary" (click)="getVersionWikiPageForProject()">Getting an old version of a wiki page</button>
+      <button type="button" class="btn btn-primary" (click)="createWikiPageForProject()">Creating a wiki page</button>
+      <button type="button" class="btn btn-primary" (click)="updateWikiPageForProject()">Updating a wiki page</button>
+      <button type="button" class="btn btn-primary" (click)="deleteWikiPage()">Delete a wiki page</button>
+    </div>
+  </div>
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="getAllQueries()">Get all queries</button>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="getAttachement()">Get Attachement</button>
+      <button type="button" class="btn btn-primary" (click)="updateAttachement()">Update Attachement</button>
+      <button type="button" class="btn btn-primary" (click)="deleteAttachement()">Delete Attachement</button>
+    </div>
+  </div>
+ 
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="getTrackers()">Get Trackers</button>
+    </div>
+  </div>
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="loadIssuePriorities()">Load Issue Priorities</button>
+      <button type="button" class="btn btn-primary" (click)="loadDocumentCategories()">Add Document Categories</button>
+      <button type="button" class="btn btn-primary" (click)="loadTimeTrackingActivities()">Load Time Tracking
+        Activities</button>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="loadIssueCategoriesForProject()">Get All Issue Categories for Project</button>
+      <button type="button" class="btn btn-primary" (click)="addIssueCategoryToProject()">Add Issue Category for Project</button>
+      <button type="button" class="btn btn-primary" (click)="getIssueCategoryById()">Get Issue Category By Id</button>
+      <button type="button" class="btn btn-primary" (click)="updateIssueCategory()">Update Issue Category</button>
+      <button type="button" class="btn btn-primary" (click)="deleteIssueCategory()">Delete Issue Category</button>
+    </div>
+  </div>
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="loadRoles()">Load Roles</button>
+      <button type="button" class="btn btn-primary" (click)="loadRoleById()">Load Role By Id</button>
+    </div>
+  </div>
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="loadGroups()">Load Groups</button>
+      <button type="button" class="btn btn-primary" (click)="createGroup()">Create Group</button>
+      <button type="button" class="btn btn-primary" (click)="loadGroupById()">Load Group By Id</button>
+      <button type="button" class="btn btn-primary" (click)="updateGroupId()">Update Group Id</button>
+      <button type="button" class="btn btn-primary" (click)="deleteGroup()">Delete Group</button>
+      <button type="button" class="btn btn-primary" (click)="addUserToGroup()">Add User to Group</button>
+      <button type="button" class="btn btn-primary" (click)="removeUserFromGroup()">Remove user from Group</button>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="loadCustomFields()">Load Custom Fields</button>
+    </div>
+  </div>
+
+
+  <div class="row mb-3" *ngIf="user">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary" (click)="loadFilesForProject()">Load files for project</button>
+
+      <button class="btn btn-primary"  type="button" (click)="fileInput.click()"> 
+        <span>Upload File and add to project</span>
+        <input #fileInput type="file" (change)="handleFileInput($event.target.files)" style="display:none;" />
+      </button> 
+    </div>
+  </div>
+ -->
+
+
+
+
+</div>

@@ -1,0 +1,9 @@
+<div class="container jumbotron">
+  <div class="row mb-3">
+      <div class="col-12">
+          <ul class="list-group list-group-flush" *ngIf="trackerResultWrapper">
+              <li class="list-group-item" *ngFor="let tracker of trackerResultWrapper.trackers">{{tracker.name}}</li> 
+            </ul>
+      </div>
+    </div>
+</div>
